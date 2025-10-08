@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AutoOps — Self-Healing Infrastructure</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <script src="https://unpkg.com/bodymovin/build/player/lottie.min.js"></script>
+  <script>
+    // small theme toggle
+    function toggleTheme(){
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+    (function(){
+      const pref = localStorage.getItem('theme');
+      if(pref === 'dark') document.documentElement.classList.add('dark');
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container row between center">
+      <div class="brand">AutoOps</div>
+      <nav class="nav">
+        <a href="#value">Value</a>
+        <a href="#how">How it works</a>
+        <a href="#arch">Architecture</a>
+        <a href="#safety">Safety</a>
+        <a href="#faq">FAQ</a>
+        <button class="btn ghost" onclick="toggleTheme()">Toggle theme</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero gradient">
+    <div class="container hero-content">
+      <h1>Self‑Healing Infrastructure, explained</h1>
+      <p class="lead">AutoOps monitors your stack, analyzes incidents with AI, and proposes safe remediations that you approve.
+      This page explains the concept — no backend required.</p>
+      <div id="lottie" class="hero-lottie"></div>
+      <div class="cta-row">
+        <a class="btn primary" href="#how">See the workflow</a>
+        <a class="btn" href="https://github.com/&lt;YOUR-USERNAME&gt;/autoops-website">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="value" class="section">
+    <div class="container">
+      <h2 class="section-title">Why AutoOps?</h2>
+      <div class="grid three">
+        <div class="card">
+          <h3>Reduce MTTR</h3>
+          <p>Faster incident triage with AI summarization and targeted suggestions.</p>
+        </div>
+        <div class="card">
+          <h3>Fewer Alerts</h3>
+          <p>Deduplicate noisy alerts into clear, actionable timelines.</p>
+        </div>
+        <div class="card">
+          <h3>Safe by Default</h3>
+          <p>All actions run in Safe Mode until explicitly approved.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="section alt">
+    <div class="container">
+      <h2 class="section-title">How it works</h2>
+      <ol class="timeline">
+        <li>Monitoring detects an anomaly and triggers a webhook.</li>
+        <li>AutoOps Analyzer summarizes logs and hypotheses root causes.</li>
+        <li>A decision engine selects safe actions or requests human approval.</li>
+        <li>Post‑action validation confirms recovery or rolls back.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="arch" class="section">
+    <div class="container">
+      <h2 class="section-title">Architecture (concept)</h2>
+      <div class="arch">
+        <svg viewBox="0 0 700 220" class="arch-svg" aria-label="Architecture diagram">
+          <rect x="20" y="40" width="140" height="60" rx="10" class="node"/>
+          <text x="90" y="75" text-anchor="middle">Monitoring</text>
+          <path d="M160 70 L220 70" class="arrow"/>
+          <rect x="220" y="40" width="160" height="60" rx="10" class="node"/>
+          <text x="300" y="75" text-anchor="middle">n8n Orchestrator</text>
+          <path d="M380 70 L440 70" class="arrow"/>
+          <rect x="440" y="20" width="240" height="60" rx="10" class="node"/>
+          <text x="560" y="55" text-anchor="middle">Analyzer (LLM + Rules)</text>
+          <path d="M380 70 L440 170" class="arrow"/>
+          <rect x="440" y="140" width="240" height="60" rx="10" class="node"/>
+          <text x="560" y="175" text-anchor="middle">Actions (Slack/Jira/Kubernetes)</text>
+        </svg>
+      </div>
+      <p class="note">LLM integration is optional. Without a key, a rule‑based analyzer still provides baseline triage.</p>
+    </div>
+  </section>
+
+  <section id="safety" class="section alt">
+    <div class="container">
+      <h2 class="section-title">Safety first</h2>
+      <div class="grid two">
+        <div class="callout">
+          <h3>Safe Mode</h3>
+          <p>With <code>AUTOOPS_SAFE_MODE=true</code>, destructive actions are never executed. Actions are queued as <em>pending</em> until approved.</p>
+        </div>
+        <div class="callout">
+          <h3>Human‑in‑the‑Loop</h3>
+          <p>Slack/Jira approvals and audit trails ensure accountability and prevent unintended changes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="container">
+      <h2 class="section-title">FAQ</h2>
+      <div class="faq">
+        <details>
+          <summary>Does AutoOps make changes automatically?</summary>
+          <p>Not without approval. In Safe Mode, actions are proposals that require a human click to execute.</p>
+        </details>
+        <details>
+          <summary>Do I need an OpenAI key?</summary>
+          <p>No. The analyzer falls back to rules when a key is not provided.</p>
+        </details>
+        <details>
+          <summary>Can I integrate with my stack?</summary>
+          <p>Yes — use n8n nodes for Slack/Jira/Kubernetes and customize the analyzer prompts and rules.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container row between center">
+      <p>© 2025 AutoOps (demo). Conceptual site — no live actions.</p>
+      <a class="link" href="https://github.com/&lt;YOUR-USERNAME&gt;/autoops-website">GitHub Repository</a>
+    </div>
+  </footer>
+
+  <script>
+    // load optional lottie animation if present
+    fetch('./assets/lottie.json').then(r => r.json()).then(animationData => {
+      lottie.loadAnimation({
+        container: document.getElementById('lottie'),
+        renderer:'svg', loop:true, autoplay:true, animationData
+      });
+    }).catch(()=>{
+      const el = document.getElementById('lottie');
+      el.classList.add('lottie-fallback');
+      el.textContent = 'Place a Lottie animation at docs/assets/lottie.json';
+    });
+  </script>
+</body>
+</html>
+
+

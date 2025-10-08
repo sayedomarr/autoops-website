@@ -1,0 +1,98 @@
+{
+  "name": "AutoOps - Demo Workflow (skeleton)",
+  "nodes": [
+    {
+      "id": "1",
+      "type": "n8n-nodes-base.webhook",
+      "name": "Webhook - Prometheus Alert",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "autoops-alert"
+      }
+    },
+    {
+      "id": "2",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Analyze Log (Backend)",
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "http://backend:8000/api/analyze",
+        "jsonParameters": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "3",
+      "type": "n8n-nodes-base.switch",
+      "name": "Decide Action",
+      "parameters": {
+        "rules": [
+          {
+            "key": "analysis",
+            "operation": "contains",
+            "value": "OutOfMemory"
+          }
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "type": "n8n-nodes-base.slack",
+      "name": "Notify Slack",
+      "parameters": {
+        "webhookUrl": "<SLACK_WEBHOOK_URL>"
+      }
+    },
+    {
+      "id": "5",
+      "type": "n8n-nodes-base.executeCommand",
+      "name": "Execute Remediation (kubectl) - PLACEHOLDER",
+      "parameters": {
+        "command": "kubectl rollout restart deployment/backend-service -n demo",
+        "runInDocker": false
+      }
+    }
+  ],
+  "connections": {
+    "Webhook - Prometheus Alert": {
+      "main": [
+        [
+          {
+            "node": "Analyze Log (Backend)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Log (Backend)": {
+      "main": [
+        [
+          {
+            "node": "Decide Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decide Action": {
+      "main": [
+        [
+          {
+            "node": "Notify Slack",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Execute Remediation (kubectl) - PLACEHOLDER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
+
+

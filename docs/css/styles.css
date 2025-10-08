@@ -1,0 +1,73 @@
+/* Modern explanatory landing styles with dark mode */
+:root { --bg:#0b1220; --text:#0e1525; --muted:#445; --primary:#2563eb; --card:#ffffff; --ring: rgba(37,99,235,.25); }
+.dark { --bg:#0b1220; --text:#e2e8f0; --muted:#9aa4b2; --primary:#60a5fa; --card:#101827; --ring: rgba(96,165,250,.25); }
+
+html, body { height:100%; }
+body { font-family: "Inter", "Segoe UI", Tahoma, Arial, sans-serif; background:#f7f9fc; color:var(--text); line-height:1.6; margin:0; }
+.dark body { background:#0b1220; }
+
+.container { max-width:1100px; margin:0 auto; padding:0 20px; }
+.row { display:flex; }
+.between { justify-content:space-between; }
+.center { align-items:center; }
+
+.site-header { position:sticky; top:0; backdrop-filter:saturate(1.2) blur(6px); background:rgba(255,255,255,.7); border-bottom:1px solid rgba(0,0,0,.05); z-index:5; }
+.dark .site-header { background:rgba(16,24,39,.6); border-color:rgba(255,255,255,.06); }
+.brand { font-weight:700; letter-spacing:.2px; }
+.nav a { color:inherit; text-decoration:none; margin:0 10px; }
+.nav .btn { margin-left:10px; }
+
+.btn { background:#e5e7eb; color:#111; padding:10px 14px; border-radius:8px; border:0; cursor:pointer; text-decoration:none; display:inline-block; }
+.btn:hover { filter:brightness(.98); }
+.btn.primary { background:var(--primary); color:#fff; box-shadow:0 8px 24px var(--ring); }
+.btn.ghost { background:transparent; border:1px solid rgba(0,0,0,.1); color:inherit; }
+.dark .btn.ghost { border-color:rgba(255,255,255,.12); }
+
+.gradient { background: radial-gradient(1000px 500px at 50% -10%, rgba(37,99,235,.25), transparent 60%); }
+.hero { text-align:center; padding:56px 0; }
+.hero-content h1 { font-size:42px; margin:0 0 10px; }
+.lead { max-width:760px; margin:0 auto 18px; color:#4b5563; }
+.dark .lead { color:#aab4c3; }
+.hero-lottie { max-width:560px; height:280px; margin:20px auto; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.3)); border:1px solid rgba(0,0,0,.06); border-radius:16px; }
+.dark .hero-lottie { background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border-color: rgba(255,255,255,.06); }
+.cta-row { display:flex; gap:10px; justify-content:center; }
+
+.section { padding:48px 0; }
+.section.alt { background:linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,0)); }
+.dark .section.alt { background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)); }
+.section-title { font-size:26px; margin:0 0 18px; text-align:center; }
+
+.grid { display:grid; gap:16px; }
+.grid.two { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid.three { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+.card { background:var(--card); border:1px solid rgba(0,0,0,.06); border-radius:14px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,.04); }
+.dark .card { border-color: rgba(255,255,255,.06); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+
+.timeline { list-style: none; counter-reset: step; padding:0; margin:0; }
+.timeline li { position:relative; background:var(--card); border:1px solid rgba(0,0,0,.06); border-radius:12px; padding:12px 12px 12px 44px; margin:10px 0; }
+.timeline li:before { counter-increment: step; content: counter(step); position:absolute; left:12px; top:12px; width:24px; height:24px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; }
+.dark .timeline li { border-color: rgba(255,255,255,.06); }
+
+.arch { display:flex; justify-content:center; }
+.arch-svg { width:100%; max-width:720px; height:auto; }
+.node { fill: var(--card); stroke: rgba(0,0,0,.08); }
+.dark .node { stroke: rgba(255,255,255,.12); }
+.arrow { stroke: var(--primary); stroke-width: 2; marker-end: url(#none); }
+
+.callout { background:var(--card); border:1px solid rgba(0,0,0,.06); border-radius:12px; padding:16px; }
+.dark .callout { border-color: rgba(255,255,255,.06); }
+
+.faq details { background:var(--card); border:1px solid rgba(0,0,0,.06); border-radius:10px; padding:12px 14px; margin:10px 0; }
+.dark .faq details { border-color: rgba(255,255,255,.06); }
+.faq summary { cursor:pointer; font-weight:600; }
+
+.site-footer { padding:22px 0; border-top:1px solid rgba(0,0,0,.06); }
+.dark .site-footer { border-color: rgba(255,255,255,.08); }
+.link { color: var(--primary); text-decoration:none; }
+
+/* utilities */
+code { background:rgba(148,163,184,.15); padding:2px 6px; border-radius:6px; }
+.dark code { background:rgba(148,163,184,.18); }
+
+
