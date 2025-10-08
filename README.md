@@ -1,6 +1,8 @@
-# AutoOps — Self-Healing Infrastructure (demo repo)
+# AutoOps — Self‑Healing Infrastructure (concept site)
 
-Short: AI-driven automation that analyzes logs and remediates infra incidents automatically (demo).
+This repository hosts a polished, explanatory landing page for the idea of “AutoOps — Self‑Healing Infrastructure.”
+
+The site explains how AutoOps would monitor your stack, analyze incidents with AI, and propose safe remediations that you approve. It is a concept/overview only — it does not run live remediation or call any backend services.
 
 ## Contents
 - `docs/` : static explanatory site (index.html) with Lottie animation (no live backend)
@@ -9,24 +11,29 @@ Short: AI-driven automation that analyzes logs and remediates infra incidents au
 - `docker-compose.yml` : run `backend` + `n8n` locally
 - `.github/workflows/deploy-pages.yml` : CI to publish `docs/` to GitHub Pages
 
-## Quick start (dev)
-1. Copy `.env.example` to `.env` and set `OPENAI_API_KEY` (optional).
-2. Build & run:
-   ```bash
-   docker-compose up --build
-   ```
+## View locally (for screenshots)
+Open the static site in a simple local server and take screenshots:
 
-3. Open:
-
-   * Frontend (static): `docs/index.html` (or use GitHub Pages)
-   * Backend API: [http://localhost:8000/api/health](http://localhost:8000/api/health)
-4. This site explains the concept only; no live calls are required. If you want to run the backend demo, use Docker Compose and test endpoints via curl.
+```bash
+cd docs
+python3 -m http.server 8080
+# then visit http://localhost:8080
+```
 
 ## Live repository
 
 This repo is hosted on GitHub: [`sayedomarr/autoops-website`](https://github.com/sayedomarr/autoops-website)
 
 If you enable GitHub Pages (Actions → gh-pages workflow), the `docs/` site will be served automatically.
+
+## Deploy to GitHub Pages
+
+This repository includes `.github/workflows/deploy-pages.yml` which publishes the `docs/` directory. To deploy:
+
+1. Push your changes to the `main` branch of `sayedomarr/autoops-website`.
+2. In GitHub, open Settings → Pages and set Source to “GitHub Actions.”
+3. Check the Actions tab; the “Deploy Docs to GitHub Pages” workflow will run and publish.
+4. Your site will be available at `https://sayedomarr.github.io/autoops-website/` once the workflow completes.
 
 ## Project structure
 
@@ -54,8 +61,8 @@ autoops-website/
 ├─ n8n-workflows/
 │  ├─ README.md
 │  └─ autoops-workflow.json         # n8n skeleton (Webhook → Analyze → Act)
-├─ docker-compose.yml               # Backend + n8n for local demo
-├─ env.example                      # Sample environment
+├─ docker-compose.yml               # (Optional) backend + n8n for local demo
+├─ env.example                      # Sample environment (optional backend)
 ├─ .env                             # Local env (do not commit secrets)
 ├─ LICENSE                          # MIT
 └─ README.md
@@ -63,29 +70,27 @@ autoops-website/
 
 ## Screenshots
 
-Add your screenshots in `docs/assets/screenshots/` and reference them here:
+The following screenshots are included under `docs/assets/screenshots/` and shown here in order:
 
-![Landing](docs/assets/screenshots/landing.png)
-![Health Endpoint](docs/assets/screenshots/health.png)
-![Concept Workflow](docs/assets/screenshots/workflow.png)
+![1](docs/assets/screenshots/1.png)
+![2](docs/assets/screenshots/2.png)
+![3](docs/assets/screenshots/3.png)
+![4](docs/assets/screenshots/4.png)
 
-## Safety & Production notes
+## Safety principles (concept)
 
-* The demo runs in **SAFE MODE** by default (`AUTOOPS_SAFE_MODE=true`), which prevents destructive infra actions.
-* Replace analyzer fallback with a managed LLM + vector DB for production.
-* Secure `OPENAI_API_KEY`, Slack webhook, Jira tokens via GitHub Secrets for CI.
+- Safe Mode by default (`AUTOOPS_SAFE_MODE=true`): destructive actions are never executed automatically.
+- Human‑in‑the‑loop approvals (Slack/Jira) before any infra changes.
+- LLM integration is optional; rule‑based fallback stays available.
 
-## Structure & files
+## Optional: run the demo backend (not required)
+Only if you want to experiment locally with the demo API:
 
-(see repo root)
-
-## Screenshots
-
-Place screenshots under `docs/assets/screenshots/` and reference them here, for example:
-
-![Landing](docs/assets/screenshots/landing.png)
-![Health Endpoint](docs/assets/screenshots/health.png)
-![Simulate Alert](docs/assets/screenshots/simulate-alert.png)
+```bash
+cp env.example .env
+docker-compose up --build
+# Health check: http://localhost:8000/api/health
+```
 
 ## License
 
